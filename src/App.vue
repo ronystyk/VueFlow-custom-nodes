@@ -57,7 +57,7 @@ const nodeTypes = {
     inputNode: markRaw(InputNode)
 }
 
-const buildElements = (cols = 100, rowsByElement = 100) => {
+const buildElements = (cols = 10, rowsByElement = 10) => {
     const elements = []
     elements.push({ id: 'input-0-0', type: 'input', position: { x: 100, y: 400 }, data: { label: 'Entrada' } })
     const inputId = 'input-0-0'
