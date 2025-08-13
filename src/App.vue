@@ -63,6 +63,13 @@ const buildElements = (cols = 10, rowsByElement = 10) => {
             elements.push({ id: `input-${i}-${j}`, type: 'inputNode', position: { y: 100 + j * 400, x: 100 + i * 400 }, data: { label: `Input ${i}-${j}` } })
             elements.push({ id: `ei-${inputId}-${i}-${j}`, source: inputId, target: `input-${i}-${j}`, animated: false })
             elements.push({ id: `eo-${inputId}-${i}-${j}`, source: `input-${i}-${j}`, target: outputId, animated: false })
+            elements.push({ 
+                id: `ei-${inputId}-${i}-${j}`, 
+                source: inputId, 
+                target: `input-${i}-${j}`, 
+                animated: false,
+                style: { stroke: '#9999', strokeWidth: 2}
+            })
         }
     }
     elements.push({ id: outputId, type: 'output', position: { y: 100 +(rowsByElement + 1) * 400, x: 200 + ((cols + 1) * 400) }, data: { label: 'Salida' } })
