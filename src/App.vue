@@ -12,10 +12,8 @@
             :memoryUsage="memoryUsage"
             :memoryInfo="memoryInfo"
             :cpuInfo="cpuInfo"
-            :gpuInfo="gpuInfo"
             :performanceMetrics="performanceMetrics"
             :cpuUsage="cpuUsage"
-            :gpuUsage="gpuUsage"
             :frameTime="frameTime"
         />
         
@@ -45,10 +43,8 @@ const {
     memoryUsage,
     memoryInfo,
     cpuInfo,
-    gpuInfo,
     performanceMetrics,
     cpuUsage,
-    gpuUsage,
     frameTime,
     onPaneReady
 } = usePerformanceMetrics()
