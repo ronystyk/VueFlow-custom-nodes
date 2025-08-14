@@ -20,6 +20,8 @@
         <VueFlow 
             v-model="elements"
             :nodeTypes="nodeTypes"
+            :minZoom="0.2"
+            :maxZoom="2"
             @pane-ready="onPaneReady"
         />
     </div>
@@ -88,6 +90,13 @@ const onNodeUpdate = (event) => {
 <style>
 @import '@vue-flow/core/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+}
 
 #app {
     font-family: Arial, sans-serif;
