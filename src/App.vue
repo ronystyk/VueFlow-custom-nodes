@@ -1,12 +1,32 @@
-<template>        
-    <!-- Pane de VueFlow -->
-    <VueFlow 
-        v-model="elements"
-        :nodeTypes="nodeTypes"
-        :minZoom="0.2"
-        :maxZoom="2"
-        @pane-ready="onPaneReady"
-    />
+<template>    
+    <div style="width: 100vw; height: 100vh">
+        <LoadingOverlay 
+            :loading="loading" 
+            :initTime="initTime" 
+        />
+        
+        <MetricsPanel 
+            :initTime="initTime"
+            :paneReadyTime="paneReadyTime"
+            :totalAppTime="totalAppTime"
+            :memoryUsage="memoryUsage"
+            :memoryInfo="memoryInfo"
+            :cpuInfo="cpuInfo"
+            :performanceMetrics="performanceMetrics"
+            :cpuUsage="cpuUsage"
+            :frameTime="frameTime"
+        />
+        
+
+        <!-- Pane de VueFlow -->
+        <VueFlow 
+            v-model="elements"
+            :nodeTypes="nodeTypes"
+            :minZoom="0.2"
+            :maxZoom="2"
+            @pane-ready="onPaneReady"
+        />
+    </div>
 </template>
 
 <script setup>
@@ -19,6 +39,28 @@ import '@vue-flow/core/dist/style.css'
 
 // Nodos personalizados
 import FormNode from './nodes/FormNode.vue'
+
+// Componentes
+import LoadingOverlay from './components/LoadingOverlay.vue'
+import MetricsPanel from './components/MetricsPanel.vue'
+
+// Composables
+import { usePerformanceMetrics } from './composables/usePerformanceMetrics'
+
+// Usar el composable de métricas de rendimiento
+const {
+    initTime,
+    loading,
+    paneReadyTime,
+    totalAppTime,
+    memoryUsage,
+    memoryInfo,
+    cpuInfo,
+    performanceMetrics,
+    cpuUsage,
+    frameTime,
+    onPaneReady
+} = usePerformanceMetrics()
 
 // Tipos de nodos
 const nodeTypes = {
