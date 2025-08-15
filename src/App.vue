@@ -17,6 +17,7 @@
             :frameTime="frameTime"
         />
         
+        <!-- Pane de VueFlow -->
         <VueFlow 
             v-model="elements"
             :nodeTypes="nodeTypes"
@@ -28,12 +29,21 @@
 </template>
 
 <script setup>
+// Importaciones de Vue
 import { ref, markRaw } from 'vue'
+
+// Importaciones de VueFlow
 import { VueFlow } from '@vue-flow/core'
 import '@vue-flow/core/dist/style.css'
-import InputNode from './nodes/InputNode.vue'
+
+// Nodos personalizados
+import FormNode from './nodes/FormNode.vue'
+
+// Componentes
 import LoadingOverlay from './components/LoadingOverlay.vue'
 import MetricsPanel from './components/MetricsPanel.vue'
+
+// Composables
 import { usePerformanceMetrics } from './composables/usePerformanceMetrics'
 
 // Usar el composable de métricas de rendimiento
@@ -51,30 +61,43 @@ const {
     onPaneReady
 } = usePerformanceMetrics()
 
+// Tipos de nodos
 const nodeTypes = {
-    inputNode: markRaw(InputNode)
+    FormNode: markRaw(FormNode)
 }
 
-const buildElements = (cols = 10, rowsByElement = 10) => {
+// Función para construir los nodos
+const buildElements = (cols = 20, rowsByElement = 20) => {
     const elements = []
-    elements.push({ id: 'input-0-0', type: 'input', position: { x: 100, y: 400 }, data: { label: 'Entrada' } })
+    // Nodo de entrada
     const inputId = 'input-0-0'
+    elements.push({ id: inputId, type: 'input', position: { x: 100, y: 400 }, data: { label: 'Entrada' } })
+
+    // Añadir el nodo de salida
     const outputId = 'output-0-0'
+    elements.push({ id: outputId, type: 'output', position: { y: 100 +(rowsByElement + 1) * 400, x: 200 + ((cols + 1) * 400) }, data: { label: 'Salida' } })
+    
     for (let i = 1; i <= cols; i++) {
         for (let j = 1; j <= rowsByElement; j++) {
-            elements.push({ id: `input-${i}-${j}`, type: 'inputNode', position: { y: 100 + j * 400, x: 100 + i * 400 }, data: { label: `Input ${i}-${j}` } })
-            elements.push({ id: `ei-${inputId}-${i}-${j}`, source: inputId, target: `input-${i}-${j}`, animated: false })
-            elements.push({ id: `eo-${inputId}-${i}-${j}`, source: `input-${i}-${j}`, target: outputId, animated: false })
-            elements.push({ 
-                id: `ei-${inputId}-${i}-${j}`, 
-                source: inputId, 
-                target: `input-${i}-${j}`, 
-                animated: false,
-                style: { stroke: '#9999', strokeWidth: 2}
-            })
+            // Datos del nodo
+            const formData = {
+                label: `Input ${i}-${j}`,
+                name: `Form ${i}-${j}`,
+                age: (i + j) % 100,
+                email: `email${i}-${j}@example.com`,
+                option: 'opcion1',
+                checked: true
+            }
+
+            // Nodo de entrada
+            const formNodeId = `form-${i}-${j}`
+            elements.push({ id: formNodeId, type: 'FormNode', position: { y: 100 + j * 400, x: 100 + i * 400 }, data: formData })
+
+            // Conexiones
+            elements.push({ id: `ei-${inputId}-${i}-${j}`, source: inputId, target: formNodeId, animated: false })
+            elements.push({ id: `eo-${inputId}-${i}-${j}`, source: formNodeId, target: outputId, animated: false })
         }
     }
-    elements.push({ id: outputId, type: 'output', position: { y: 100 +(rowsByElement + 1) * 400, x: 200 + ((cols + 1) * 400) }, data: { label: 'Salida' } })
     return elements
 }
 
