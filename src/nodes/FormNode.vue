@@ -46,9 +46,13 @@
   </template>
   
   <script setup>
-  import { ref, watch } from 'vue'
+  // Importaciones de Vue
+  import { ref, watch, defineProps, defineEmits } from 'vue'
+
+  // Importaciones de VueFlow
   import { Handle, Position } from '@vue-flow/core'
   
+  // Props del nodo
   const props = defineProps({
     id: {
       type: String,
@@ -60,6 +64,7 @@
     }
   })
   
+  // Emits del nodo
   const emit = defineEmits(['update-node'])
   
   // Copia local de los datos
