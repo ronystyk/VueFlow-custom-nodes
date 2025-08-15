@@ -47,7 +47,7 @@
   
   <script setup>
   // Importaciones de Vue
-  import { ref, watch, defineProps, defineEmits } from 'vue'
+  import { ref, watch } from 'vue'
 
   // Importaciones de VueFlow
   import { Handle, Position } from '@vue-flow/core'
