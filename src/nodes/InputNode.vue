@@ -40,10 +40,14 @@
         </div>
       </div>
     </div>
+
+    <Handle id="a" type="source" :position="Position.Right" />
+    <Handle id="b" type="target" :position="Position.Left" />
   </template>
   
   <script setup>
   import { ref, watch } from 'vue'
+  import { Handle, Position } from '@vue-flow/core'
   
   const props = defineProps({
     id: {
@@ -86,7 +90,7 @@
     border: 2px solid #42b883;
     background: white;
     min-width: 220px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
   }
   
   .node-header {
