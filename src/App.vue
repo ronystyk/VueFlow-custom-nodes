@@ -1,31 +1,12 @@
-<template>
-    <div style="width: 100vw; height: 100vh">
-        <LoadingOverlay 
-            :loading="loading" 
-            :initTime="initTime" 
-        />
-        
-        <MetricsPanel 
-            :initTime="initTime"
-            :paneReadyTime="paneReadyTime"
-            :totalAppTime="totalAppTime"
-            :memoryUsage="memoryUsage"
-            :memoryInfo="memoryInfo"
-            :cpuInfo="cpuInfo"
-            :performanceMetrics="performanceMetrics"
-            :cpuUsage="cpuUsage"
-            :frameTime="frameTime"
-        />
-        
-        <!-- Pane de VueFlow -->
-        <VueFlow 
-            v-model="elements"
-            :nodeTypes="nodeTypes"
-            :minZoom="0.2"
-            :maxZoom="2"
-            @pane-ready="onPaneReady"
-        />
-    </div>
+<template>        
+    <!-- Pane de VueFlow -->
+    <VueFlow 
+        v-model="elements"
+        :nodeTypes="nodeTypes"
+        :minZoom="0.2"
+        :maxZoom="2"
+        @pane-ready="onPaneReady"
+    />
 </template>
 
 <script setup>
@@ -39,28 +20,6 @@ import '@vue-flow/core/dist/style.css'
 // Nodos personalizados
 import FormNode from './nodes/FormNode.vue'
 
-// Componentes
-import LoadingOverlay from './components/LoadingOverlay.vue'
-import MetricsPanel from './components/MetricsPanel.vue'
-
-// Composables
-import { usePerformanceMetrics } from './composables/usePerformanceMetrics'
-
-// Usar el composable de métricas de rendimiento
-const {
-    initTime,
-    loading,
-    paneReadyTime,
-    totalAppTime,
-    memoryUsage,
-    memoryInfo,
-    cpuInfo,
-    performanceMetrics,
-    cpuUsage,
-    frameTime,
-    onPaneReady
-} = usePerformanceMetrics()
-
 // Tipos de nodos
 const nodeTypes = {
     FormNode: markRaw(FormNode)
@@ -73,7 +32,7 @@ const buildElements = (cols = 20, rowsByElement = 20) => {
     const inputId = 'input-0-0'
     elements.push({ id: inputId, type: 'input', position: { x: 100, y: 400 }, data: { label: 'Entrada' } })
 
-    // Añadir el nodo de salida
+    // Nodo de salida
     const outputId = 'output-0-0'
     elements.push({ id: outputId, type: 'output', position: { y: 100 +(rowsByElement + 1) * 400, x: 200 + ((cols + 1) * 400) }, data: { label: 'Salida' } })
     
@@ -89,7 +48,7 @@ const buildElements = (cols = 20, rowsByElement = 20) => {
                 checked: true
             }
 
-            // Nodo de entrada
+            // Nodo de formulario
             const formNodeId = `form-${i}-${j}`
             elements.push({ id: formNodeId, type: 'FormNode', position: { y: 100 + j * 400, x: 100 + i * 400 }, data: formData })
 
